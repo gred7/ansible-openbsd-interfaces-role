@@ -1,0 +1,398 @@
+{% if item.if | regex_search('^vlan|^svlan') %}
+  parent {{ item.parent }}
+  vnetid {{ item.vnetid }}
+{% endif %}
+{% if item.if | regex_search('^egre|^eoip|^etherip|^gif|^gre|^mgre|^nvgre|^vxlan') %}
+  tunnel {{ item.myside }} {{ item.theirside }}
+  dest {{ item.dest }}
+  {% if item.keepalive is defined %}
+    keepalive {{ item.keepalive }}
+  {% endif %}
+  {% if item.rxprio is defined %}
+    rxprio {{ item.rxprio }}
+  {% endif %}
+  {% if item.tunneldf is defined %}
+    tunneldf
+  {%endif%}
+  {% if item.tunneldomain is defined %}
+    tunneldomain item.tunneldomain
+  {%endif%}
+  {% if item.vnetflowid is defined %}
+    vnetflowid
+  {%endif%}
+{% endif %}
+{% if item.if | regex_search('^acx|^an|^ath|^athn|^atu|^atw|^bwfm|^bwi|^ipw|^iwi|^iwm|^iwn|^iwx|^malo|^otus|^pgt|^ral|^rsu|^rtw|^rtwn|^rum|^run|^uath|^upgt|^ural|^urtw|^urtwn|^wi|^wpi|^zyd') %}
+  {% if item.bssid is defined %}
+    bssid {{ item.bssid }}
+  {% endif %}
+  {%if item.chan is defined %}
+    chan {{ item.chan }}
+  {%endif%}
+  {% if item.join is defined %}
+    join {{ item.join }}
+  {% endif %}
+  {% if item.nwflag is defined %}
+    nwflag {{ item.nwflag }}
+  {% endif %}
+  {% if item.nwid is defined %}
+    nwid {{ item.nwid }}
+  {% endif %}
+  {% if item.nwkey is defined %}
+    nwkey {{ item.nwkey }}
+  {% endif %}
+  {% if item.powersave is defined %}
+    powersave {{ item.powersave }}
+  {% endif %}
+  {% if item.wpaakms is defined %}
+    wpaakms {{ item.wpaakms }}
+  {% endif %}
+  {% if item.wpaciphers is defined %}
+    wpaciphers {{ item.wpaciphers }}
+  {% endif %}
+  {% if item.wpagroupcipher is defined %}
+    wpagroupcipher {{ wpagroupcipher }}
+  {% endif %}
+  {% if item.wpakey is defined %}
+    wpakey {{ item.wpakey }}
+  {% endif %}
+  {% if item.wpaprotos is defined %}
+    wpaprotos item.wpaprotos
+  {%  endif %}
+{% endif %}
+{% if item.if | regex_search ('^bridge') %}
+  {% if item.members is defined %}
+    {% for interface in item.members %}
+      add {{ interface }}
+    {% endfor %}
+  {% endif %}
+  {% if item.span is defined %}
+    {% for interface in item.span %}
+      addspan {{ interface }}
+    {% endfor %}
+  {% endif %}
+  {% if item.autoedge is defined %}
+    {% for interface in item.autoedge %}
+      autoedge {{ interface }}
+    {% endfor %}
+  {% endif %}
+  {% if item.autoptp is defined %}
+    {% for interface in item.autoptp %}
+      autoptp {{ interface }}
+    {% endfor %}
+  {% endif %}
+  {% if item.blocknonip is defined %}
+    {% for interface in item.blocknonip %}
+      blocknonip {{ interface }}
+    {% endfor %}
+  {% endif %}
+  {% if item.discover is defined %}
+    {% for interface in item.discover %}
+      discover {{ interface }}
+    {% endfor %}
+  {% endif %}
+  {% if item.edge is defined %}
+    {% for interface in item.edge %}
+      edge {{ interface }}
+    {% endfor %}
+  {% endif %}
+  {% if item.fwddelay is defined %}
+    fwddelay {{ item.fwddelay }}
+  {% endif %}
+  {% if item.hellotime is defined %}
+    hellotime {{ item.hellotime }}
+  {% endif %}
+  {% if item.holdcnt is defined %}
+    holdcnt {{ item.holdcnt }}
+  {% endif %}
+  {% if item.ifcost is defined %}
+    {% for cost in item.ifcost %}
+      ifcost {{ cost.interface }} {{ cost.cost }}
+    {% endfor %}
+  {% endif %}
+  {% if item.ifpriority is defined %}
+    {% for priority in item.ifpriority %}
+      ifpriority {{ priority.interface }} {{ priority.priority }}
+    {% endfor %}
+  {% endif %}
+  {% if item.learn is defined %}
+    {%  for interface in item.learn %}
+      learn {{ interface }}
+    {% endfor %}
+  {% endif %}
+  {% if item.link0 is defined or item.stop_ip_mutlicast is defined %}
+    link0
+  {% endif %}
+  {% if item.link1 is defined or item.stop_nonip_multicast is defined %}
+    link1
+  {% endif %}
+  {% if item.link2 is defined or item.pass_to_ipsec is defined %}
+    link2
+  {% endif %}
+  {% if item.maxaddr is defined %}
+    maxaddr {{ item.maxaddr }}
+  {% endif %}
+  {% if item.maxage is defined %}
+    maxage {{ item.maxage }}
+  {% endif %}
+  {% if item.proto is defined %}
+    proto {{ item.proto }}
+  {% endif %}
+  {% if item.ptp is defined %}
+    {% for ptp in item.ptp %}
+      ptp {{ ptp }}
+    {% endfor %}
+  {% endif %}
+  {% if item.rules is defined %}
+    {% for ruleitem in item.rules %}
+      rule {{ ruleitem }}
+    {% endfor %}
+  {% endif %}
+  {% if item.rulefile is defined %}
+    rulefile {{ item.rulefile }}
+  {% endif %}
+  {% if item.spanpriority is defined %}
+    spanpriority {{ item.spanpriority }}
+  {% endif %}
+  {% if item.static is defined %}
+    {% for staticentry in item.static %}
+      static {{ staticentry.interface }} {{ staticentry.address }}
+    {% endfor %}
+  {% endif %}
+  {% if item.stp is defined %}
+    stp {{ item.stp }}
+  {% endif %}
+  {% if item.timeout is defined %}
+    timeout {{ item.timeout }}
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search ('^carp') %}
+  {% if item.advbase is defined %}
+    advbase {{ item.advbase }}
+  {% endif %}
+  {% if item.advskew is defined %}
+    advskew {{ item.advskew}}
+  {% endif %}
+  {% if item.balancing is defined %}
+    balancing {{ item.balancing }}
+  {% endif %}
+  {% if item.carpnodes is defined %}
+    carpnodes {{ item.carpnodes }}
+  {% endif %}
+  {% if item.carpdev is defined %}
+    carpdev {{ item.carpdev }}
+  {% endif %}
+  {% if item.carppeer is defined %}
+    carppeer {{ item.carppeer }}
+  {% endif %}
+  {% if item.pass is defined %}
+    pass {{ item.pass }}
+  {% endif %}
+  {% if item.carpstate is defined %}
+    state {{ item.carpstate }}
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search('^mpe|mpip|mpw') %}
+  {% if item.mpls-label is defined %}
+    mpls-label {{ item.mpls-label }}
+  {% endif %}
+  {% if item.pwecw is defined %}
+    pwecw
+  {% endif %}
+  {% if item.pwefat is defined %}
+    pwefat
+  {% endif %}
+  {% if item.neighbor-label is defined and item.neighbor is defined %}
+    pweneighbor {{ item.neighbor-label }} {{ item.neighbor }}
+  {% endif %}
+  {% if item.tunneldomain is defined %}
+    tunneldomain {{ tunneldomain }}
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search('^pair') %}
+  {% if item.patch is defined %}
+    patch {{ item.patch }}
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search('^pflow') %}
+  {% if item.flowdst is defined %}
+    flowdst {{ item.flowdst }}
+  {% endif %}
+  {% if item.flowsrc is defined %}
+    flowsrc {{ item.flowsrc }}
+  {% endif %}
+  {% if item.pflowproto is defined %}
+    pflowproto {{ item.pflowproto }}
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search('^pfsync') %}
+  {% if item.defer is defined %}
+    defer
+  {% endif %}
+  {% if item.maxupd is defined %}
+    maxupd {{ item.maxupd }}
+  {% endif %}
+  {% if item.syncdev is defined %}
+    syncdev {{ item.syncdev }}
+  {% endif %}
+  {% if item.syncpeer is defined %}
+    syncpeer {{ item.syncpeer }}
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search('^pppoe') %}
+  {% if item.authkey is defined %}
+    authkey {{ item.authkey }}
+  {% endif %}
+  {% if item.authname is defined %}
+    authname {{ item.authname }}
+  {% endif %}
+  {% if item.authproto is defined %}
+    authproto {{ item.authproto }}
+  {% endif %}
+  {% if item.peerflag is defined %}
+    peerflag {{ item.peerflag }}
+  {% endif %}
+  {% if item.peerkey is defined %}
+    peerkey {{ item.peerkey }}
+  {% endif %}
+  {% if item.peername is defined %}
+    peername {{ item.peername }}
+  {% endif %}
+  {% if item.peerproto is defined %}
+    peerproto {{ item.peerproto }}
+  {% endif %}
+  {% if item.pppoeac is defined %}
+    pppoeac {{ item.pppoeac }}
+  {% endif %}
+  {% if item.pppoedev is defined %}
+    pppoedev {{ item.pppoedev }}
+  {% endif %}
+  {% if item.pppoesvc is defined %}
+    pppoesvc {{ item.pppoesvc }}
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search('^switch') %}
+  {% if item.members is defined %}
+    {% for interface in item.members %}
+      add {{ interface.name }}
+      {% if interface.portno is defined %}
+        portno {{ interface.name }} {{ interface.portno }}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if item.local is defined %}
+    addlocal {{ item.local }}
+  {% endif %}
+  {% if item.datapath is defined %}
+    datapath {{ item.datapath }}
+  {% endif %}
+  {% if item.maxflow is defined %}
+    maxflow {{ item.maxflow }}
+  {% endif %}
+  {% if item.maxgroup is defined %}
+    maxgroup {{ item.maxgroup }}
+  {% endif %}
+  {% if item.protected is defined %}
+    {% for interface in item.protected %}
+      protected {{ interface.name }} {{ interface.domain_ids }}
+    {% endfor %}
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search('^trunk') %}
+  {% if item.members is defined %}
+    {% for interface in item.members %}
+      trunkport {{ interface }}
+    {% endfor %}
+  {% endif %}
+  {% if item.lacpmode is defined %}
+    lacpmode {{ item.lacpmode }}
+  {% endif %}
+  {% if item.lacptimeout is defined %}
+    lacptimeout {{ item.lacptimeout }}
+  {% endif %}
+  {% if item.trunkproto is defined %}
+    trunkproto {{ item.trunkproto }}
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search('^umb') %}
+  {% if item.apn is defined %}
+    apn {{ item.apn }}
+  {% endif %}
+  {% if item.classes is defined %}
+    class {{ item.classes }}
+  {% endif %}
+  {% if item.pin is defined %}
+    pin {{ item.pin }}
+  {% endif %}
+  {% if item.roaming is defined %}
+    roaming
+  {% endif %}
+{% endif %}
+{% if item.if | regex_search('^wg') %}
+  {% if item.wgkey is defined %}
+    wgkey {{ item.wgkey }}
+  {% endif %}
+  {% if item.wgport is defined %}
+    wgport {{ item.wgport }}
+  {% endif %}
+  {% if item.wgrtable is defined %}
+    wgrtable {{ item.wgrtable }}
+  {% endif %}
+  {% if item.wgpeer is defined %}
+    wgpeer {{ item.wgpeer }}
+  {% endif %}
+  {% if item.wgpsk is defined %}
+    wgpsk {{ item.wgpsk }}
+  {% endif %}
+  {% if item.wgpka is defined %}
+    wgpka {{ item.wgpka }}
+  {% endif %}
+  {% if item.wgendpoint is defined %}
+    wgendpoint {{ item.wgendpoint.ip }} {{ item.wgendpoint.port }}
+  {% endif %}
+  {% if item.wgpaip is defined %}
+    wgaip {{ item.wgaip }}
+  {% endif %}
+{% endif %}
+{% if item.description is defined %}
+  description "{{ item.description }}"
+{% endif %}
+{% if item.ip is defined %}
+  {% if item.ip  != 'dhcp' %}
+    {{ item.family }} {{ item.ip }}
+  {% else %}
+    {{ item.ip }}
+  {% endif %}
+{% endif %}
+{% if item.aliases is defined %}
+  {% for alias in item.aliases %}
+    alias {{ alias.family }} {{ alias.address }}
+  {% endfor %}
+{% endif %}
+{% if item.family == "inet6" %}
+  {% if item.anycast is defined %}
+    anycast
+  {% endif %}
+  {% if item.autoconfprivacy is defined %}
+    autoconfprivacy
+  {% endif %}
+  {% if item.eui64 is defined %}
+    eui64
+  {% endif %}
+  {% if item.pltime is defined %}
+    pltime {{ item.pltime }}
+  {% endif %}
+  {% if item.soii is defined %}
+    soii
+  {% endif %}
+  {% if item.tentative is defined %}
+    tentative
+  {% endif %}
+  {% if item.vltime is defined %}
+    vltime {{ item.vltime }}
+  {% endif %}
+{% endif %}
+{% if item.state is defined %}
+  {{ item.state }}
+{% else %}
+  up
+{% endif %}

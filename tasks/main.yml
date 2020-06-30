@@ -1,0 +1,11 @@
+- name: configure interface
+  template:
+    src: templates/hostname.if.j2
+    dest: hostname.{{ item.if }}
+    backup: yes
+    lstrip_blocks: yes
+    owner: root
+    group: wheel
+    mode: 640
+  loop:
+    "{{ ifaces | flatten }}"
