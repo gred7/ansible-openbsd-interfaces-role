@@ -15,7 +15,7 @@
     tunneldf
   {%endif%}
   {% if item.tunneldomain is defined %}
-    tunneldomain item.tunneldomain
+    tunneldomain {{ item.tunneldomain }}
   {%endif%}
   {% if item.vnetflowid is defined %}
     vnetflowid
@@ -56,8 +56,8 @@
     wpakey {{ item.wpakey }}
   {% endif %}
   {% if item.wpaprotos is defined %}
-    wpaprotos item.wpaprotos
-  {%  endif %}
+    wpaprotos {{ item.wpaprotos }}
+  {% endif %}
 {% endif %}
 {% if item.if | regex_search ('^bridge') %}
   {% if item.members is defined %}
@@ -189,6 +189,9 @@
   {% endif %}
   {% if item.carpstate is defined %}
     state {{ item.carpstate }}
+  {% endif %}
+  {% if item.vhid is defined %}
+    vhid {{ item.vhid }}
   {% endif %}
 {% endif %}
 {% if item.if | regex_search('^mpe|mpip|mpw') %}
@@ -390,6 +393,58 @@
   {% if item.vltime is defined %}
     vltime {{ item.vltime }}
   {% endif %}
+{% endif %}
+{% if item.arp is defined %}
+  {% if item.arp == "no" %}
+    -arp
+  {% endif %}
+{% endif %}
+{% if item.broadcast is defined %}
+  broadcast {{ item.broadcast }}
+{% endif %}
+{% if item.groups is defined %}
+  {% for group in item.groups %}
+    group {{ group }}
+  {% endfor %}
+{% endif %}
+{% if item.instance is defined %}
+  instance {{ item.instance }}
+{% endif %}
+{% if item.lladdr is defined %}
+  lladdr {{ item.lladdr }}
+{% endif %}
+{% if item.llprio is defined %}
+  llprio {{ item.llprio }}
+{% endif %}
+{% if item.media is defined %}
+  media {{ item.media }}
+{% endif %}
+{% if item.mediaopt is defined %}
+  mediaopt {{ item.mediaopt }}
+{% endif %}
+{% if item.metric is defined %}
+  metric {{ item.metric }}
+{% endif %}
+{% if item.mode is defined %}
+  mode {{ item.mode }}
+{% endif %}
+{% if item.mpls is defined %}
+  mpls
+{% endif %}
+{% if item.priority is defined %}
+  priority {{ item.priority }}
+{% endif %}
+{% if item.rdomain is defined %}
+  rdomain {{ item.rdomain }}
+{% endif %}
+{% if item.rtlabel is defined %}
+  rtlabel {{ item.rtlabel }}
+{% endif %}
+{% if item.staticarp is defined %}
+  staticarp
+{% endif %}
+{% if item.wol is defined %}
+  wol
 {% endif %}
 {% if item.state is defined %}
   {{ item.state }}
