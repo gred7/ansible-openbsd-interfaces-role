@@ -1,6 +1,6 @@
 # Ansible role to manage hostname.if files idempotent way
 ### Short example
-
+```
    roles:
     - role: interfaces
       vars:
@@ -9,7 +9,7 @@
             family: "inet"
             ip: "dhcp"
             description: "Temporary uplink"
-
+```
 # Features:
 
 * support all modern OpenBSD (as of July 01 2020) network interfaces
@@ -22,6 +22,7 @@ of course, one should still read corresponding manual pages in order to configur
 # Interfaces
 ## Common interface options
 following options are shared by nearly all interfaces
+```
 - role: interfaces
   vars:
     ifaces:
@@ -51,7 +52,7 @@ following options are shared by nearly all interfaces
         staticarp: value
         wol: value
         state: value
- only if family is "inet6":
+ # only if family is "inet6":
         autoconfprivacy: value
         anycast: value
         eui64: value
@@ -59,122 +60,123 @@ following options are shared by nearly all interfaces
         soii: value
         tentative: value
         vltime: value
-
+```
 ## Vlans
 
 vlan(4) interfaces are configred as follows:
-
+```
 roles:
-    - role: interfaces
-      vars:
-        ifaces:
-          - if: "vlan10"
-            parent: "re0"
-            vnetid: "10"
-            ip: "192.168.2.1/24"
-
+- role: interfaces
+  vars:
+    ifaces:
+    - if: "vlan10"
+      parent: "re0"
+      vnetid: "10"
+      ip: "192.168.2.1/24"
+```
 ## Tunnels
 All tunnel interfaces (egre|eoip|etherip|gif|gre|mgre|nvgre|vxlan) are added as follows:
-
+```
 - role: interfaces
-      vars:
-        ifaces:
-          - if: "gif0"
-            myside: "ip of my side"
-            theirside: "ip of theirside"
-            dest: "destination ip"
-            ip: "192.168.2.1/32"
+  vars:
+    ifaces:
+    - if: "gif0"
+      myside: "ip of my side"
+      theirside: "ip of theirside"
+      dest: "destination ip"
+      ip: "192.168.2.1/32"
 
-Also supported options  for tunnels are:
+#Also supported options  for tunnels are:
   keepalive: value
   rxprio: value
   tunneldf: value
   tunneldomain: value
   vnetflowid: value
-
+```
 ## Wireless network devices
 These are configured as follows:
+```
 - role: interfaces
-      vars:
-        ifaces:
-          - if: iwn0
-            bssid: "example"
-            chan: "example"
-            join: "example"
-            nwflag: "example"
-            nwid: "example"
-            nwkey: "example"
-            powersave: "y|n"
-            wpaakms: "example"
-            wpaciphers: "comma,separated"
-            wpagroupcipher: "example"
-            wpakey: "example"
-            wpaprotos: "comma,separated"
-            ip: "dhcp"
-
+  vars:
+   ifaces:
+   - if: iwn0
+     bssid: "example"
+     chan: "example"
+     join: "example"
+     nwflag: "example"
+     nwid: "example"
+     nwkey: "example"
+     powersave: "y|n"
+     wpaakms: "example"
+     wpaciphers: "comma,separated"
+     wpagroupcipher: "example"
+     wpakey: "example"
+     wpaprotos: "comma,separated"
+     ip: "dhcp"
+```
 ## Bridges
 Are set with the  following options:
-
+```
 - role: interfaces
-      vars:
-        ifaces:
-          - if: bridge0
-            members:
-              - em0
-              - em1
-            span:
-              - em0
-            autoedge:
-              - em1
-            autoptp:
-              - em0
-              - em1
-            blocknonip:
-              - em0
-              - em1
-            discover:
-              - em0
-              - em1
-            edge:
-              - em0
-              - em1
-            fwddelay: "value"
-            hellotime: "value"
-            holdcnt: "value"
-            ifcost:
-              - interface: "em0"
-                cost: 15
-              - interface: "em1"
-                cost: 20
-           ifpriority:
-             - interface: "em0"
-               priority: 60
-           learn:
-              - em0
-           stop_ip_mutlicast: "y" #or link0: "y"
-           stop_nonip_mutlicast: "y" #or link1: "y"
-           pass_to_ipsec: "y" #or link2: "y"
-           maxaddr: "value"
-           maxage: "value"
-           proto: "value"
-           ptp:
-            - em0
-            - em1
-           rules:
-            - "block 121235677"
-            - "pass"
-           rulefile: "/etc/bridgerules"
-           spanpriority: "value"
-           staic:
-             - interface: "em0"
-               address: "someaddress"
-           stp: em0
-           timeout: 30
-           state: up
-
+  vars:
+    ifaces:
+    - if: bridge0
+      members:
+      - em0
+      - em1
+      span:
+      - em0
+      autoedge:
+      - em1
+      autoptp:
+      - em0
+      - em1
+      blocknonip:
+      - em0
+      - em1
+      discover:
+      - em0
+      - em1
+      edge:
+      - em0
+      - em1
+      fwddelay: "value"
+      hellotime: "value"
+      holdcnt: "value"
+      ifcost:
+      - interface: "em0"
+        cost: 15
+      - interface: "em1"
+        cost: 20
+      ifpriority:
+      - interface: "em0"
+        priority: 60
+      learn:
+      - em0
+      stop_ip_mutlicast: "y" #or link0: "y"
+      stop_nonip_mutlicast: "y" #or link1: "y"
+      pass_to_ipsec: "y" #or link2: "y"
+      maxaddr: "value"
+      maxage: "value"
+      proto: "value"
+      ptp:
+      - em0
+      - em1
+      rules:
+      - "block 12:12:35:6a:77"
+      - "pass"
+      rulefile: "/etc/bridgerules"
+      spanpriority: "value"
+      staic:
+      - interface: "em0"
+        address: "someaddress"
+      stp: em0
+      timeout: 30
+      state: up
+```
 ## CARP
 carp(4) specific options are:
-
+```
 - role: interfaces
   vars:
     ifaces:
@@ -188,10 +190,10 @@ carp(4) specific options are:
        pass: value
        carpstate: "mapped to state"
        vhid: value
-
+```
 ## MPLS
 mpls(mpe|mpip|mpw) specific options are:
-
+```
 - role: interfaces
   vars:
     ifaces:
@@ -202,17 +204,19 @@ mpls(mpe|mpip|mpw) specific options are:
        neighbor: "value"
        neighbor-label: "value"
        tunneldomain: "value"
-
+```
 ## PAIR
 pair(4) specific options are:
+```
 - role: interfaces
   vars:
     ifaces:
       - if: pair0
         patch: pair1
-
+```
 ## PFLOW
 pflow(4) options are as follows:
+```
 - role: interfaces
   vars:
     ifaces:
@@ -220,9 +224,10 @@ pflow(4) options are as follows:
        flowdst: "value"
        flowsrc: "value"
        pflowproto: "value"
-
+```
 ## PFSYNC
 pfsync(4) options are as follows:
+```
 - role: interfaces
   vars:
     ifaces:
@@ -230,9 +235,10 @@ pfsync(4) options are as follows:
       defer: "y"
       maxupd: value
       syncdev: "em0"
-
+```
 ## PPPOE
 pppoe(4) options are as follows:
+```
 - role: interfaces
   vars:
     ifaces:
@@ -247,9 +253,10 @@ pppoe(4) options are as follows:
       pppoeac: "value"
       pppoedev: "value"
       pppoesvc: "value"
-
+```
 ## SWITCH
 switch(4) options are as follows:
+```
 - role: interfaces
   vars:
     ifaces:
@@ -266,9 +273,10 @@ switch(4) options are as follows:
       protected:
          - name: em0
            domain_ids: "10,30"
-
+```
 ## TRUNK
 trunk(4) options are as follows:
+```
 - role: interfaces
   vars:
     ifaces:
@@ -279,8 +287,10 @@ trunk(4) options are as follows:
         lacpmode: value
         lacptimeout: value
         trunkproto: value
-
+```
 ## UMB
+umb(4) options are as follows:
+```
 - role: interfaces
   vars:
     ifaces:
@@ -289,8 +299,10 @@ trunk(4) options are as follows:
         class: value
         pin: value
         roaming: "y"
-
+```
 ## WIREGUARD
+wg(4) options are as follows:
+```
 - role: interfaces
   vars:
     ifaces:
@@ -305,3 +317,4 @@ trunk(4) options are as follows:
            ip: value
            port: value
         wgaip: value
+```
