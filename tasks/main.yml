@@ -1,11 +1,11 @@
-- name: configure interface
+- name: configure network interfaces
   template:
     src: templates/hostname.if.j2
-    dest: hostname.{{ item.if }}
-    backup: yes
-    lstrip_blocks: yes
+    dest: /etc/hostname.{{ item.if }}
+    backup: 'True'
+    lstrip_blocks: 'True'
     owner: root
     group: wheel
-    mode: 640
+    mode: 0640
   loop:
     "{{ ifaces | flatten }}"
